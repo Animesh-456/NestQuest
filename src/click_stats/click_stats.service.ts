@@ -12,7 +12,7 @@ export class ClickStatService {
     private clickStatRepository: Repository<ClickStat>,
     @InjectRepository(Campaign)
     private campaignRepository: Repository<Campaign>,
-  ) {}
+  ) { }
 
   async create(createClickStatDto: CreateClickStatDto) {
     const clickStat = new ClickStat();
@@ -39,12 +39,14 @@ export class ClickStatService {
     return this.clickStatRepository.find({ relations: ['campaign'] });
   }
 
-  async incrementClickCount(id: string) {
+  async incrementClickCount(id: string, res) {
     const clickStat = await this.clickStatRepository.findOne({ where: { id } });
     if (!clickStat) {
       throw new Error('ClickStat not found');
     }
     clickStat.clickCount += 1;
-    return this.clickStatRepository.save(clickStat);
+    this.clickStatRepository.save(clickStat);
+    const redirectUrl = clickStat?.link;
+    return res.redirect(redirectUrl);
   }
 }

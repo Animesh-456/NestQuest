@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, UseGuards, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+  Param,
+  Res,
+} from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CreateClickStatDto } from './dto/create-click_stat.dto';
 import { ClickStatService } from './click_stats.service';
@@ -24,7 +32,7 @@ export class ClickStatController {
   }
 
   @Get('/track/:id')
-  async trackClick(@Param('id') id: string) {
-    return this.clickStatService.incrementClickCount(id);
+  async trackClick(@Param('id') id: string, @Res() res: Response) {
+    return this.clickStatService.incrementClickCount(id, res);
   }
 }
