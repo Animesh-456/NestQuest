@@ -29,11 +29,10 @@ describe('ClickStatController (e2e)', () => {
 
   describe('/GET click-stats/track/:id', () => {
     it('should increment the click count of the specified stat', async () => {
-      // Create a click stat to track with the required 'link' field
       const createdClickStat = await clickStatRepository.save({
         campaignId: 2,
         clickCount: 0,
-        link: 'https://example.com', // Add the required 'link' field here
+        link: 'https://example.com', 
       });
 
       // Perform a track request
@@ -41,7 +40,7 @@ describe('ClickStatController (e2e)', () => {
         .get(`/click-stats/track/${createdClickStat.id}`)
         .expect(200);
 
-      expect(response.body.clickCount).toBe(1); // Should be incremented
+      expect(response.body.clickCount).toBe(1); 
     });
   });
 });
